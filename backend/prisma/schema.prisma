@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Audio {
+  id         String     @id @unique @default(uuid())
+  path       String
+  document   Document[]
+  created_at DateTime   @default(now())
+}
+
+model Document {
+  id            String   @id @unique @default(uuid())
+  title         String
+  transcription String
+  audio_id      String   @unique
+  audio         Audio    @relation(fields: [audio_id], references: [id])
+  created_at    DateTime @default(now())
+}
+
+model Prompt {
+  id            String   @id @unique @default(uuid())
+  title         String
+  transcription String
+  created_at    DateTime @default(now())
+}
