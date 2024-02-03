@@ -14,4 +14,6 @@ const documentController = new DocumentController();
 
 route.post('/upload', upload.single('audio'), audioController.UplaodAudio)
 route.get('/audio', audioController.getAudio)
+route.delete('/audio/:id', audioController.deleteAudio)
 route.post('/transcription/audio/:id', documentController.create )
+route.get('/transcription/:id', documentController.getDocument )

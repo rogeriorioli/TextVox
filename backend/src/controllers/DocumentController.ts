@@ -47,4 +47,13 @@ export default class DocumentController {
       prisma.$disconnect();  
     }
   }
-}
+    public async getDocument(req: Request, res: Response) {
+      const {id} = req.params
+      try {
+        const document = await prisma.document.findFirst({where :  { id } })
+        res.status(200).json(document)
+      } catch (err) {
+        res.status(401).json(err)
+      }
+    }
+  }

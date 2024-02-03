@@ -14,6 +14,7 @@ model Audio {
   id         String     @id @unique @default(uuid())
   path       String
   document   Document[]
+  name       String
   created_at DateTime   @default(now())
 }
 
@@ -22,7 +23,7 @@ model Document {
   title         String
   transcription String
   audio_id      String   @unique
-  audio         Audio    @relation(fields: [audio_id], references: [id])
+  audio         Audio    @relation(fields: [audio_id], references: [id], onDelete: Cascade)
   created_at    DateTime @default(now())
 }
 

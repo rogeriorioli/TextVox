@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/express-fileupload": "^1.4.4",
     "@types/ffmpeg": "^1.0.7",
     "@types/fluent-ffmpeg": "^2.1.24",
     "@types/multer": "^1.4.11",
@@ -25,6 +26,7 @@
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@prisma/client": "5.8.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^5.2.0",
