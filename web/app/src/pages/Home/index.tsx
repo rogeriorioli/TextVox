@@ -4,6 +4,7 @@ import List from "../../components/List";
 import { api } from "../../api/api";
 import Toast from "../../components/Toast";
 import Logo from "../../components/Logo";
+import Loader from "../../components/Loader";
 
 export default function Home() {
   const [loading, setLoading] = useState<Boolean>(false);
@@ -73,6 +74,7 @@ export default function Home() {
   };
 
   const handleCreate = async (id: string) => {
+    setLoading(true)
     try {
       const response = await api.post(`/transcription/audio/${id}`);
       console.log(response.data)
@@ -81,6 +83,7 @@ export default function Home() {
         message : 'audio trasncription successful',
         response : 'success'
       })
+      setLoading(false)
       getData();
     } catch (err) {}
   };
@@ -94,7 +97,7 @@ export default function Home() {
 
   return (
       <>
-           <FileUploadComponent onChange={handleSubmit} />
+          <FileUploadComponent onChange={handleSubmit} />
           <div className=" overflow-auto h-96 lg:w-96 mx-auto mt-4 px-2">
             {items.map((item) => (
               <List
@@ -107,6 +110,7 @@ export default function Home() {
                 document={item.document}
               />
             ))}
+          {loading && <Loader/>}
           </div>
       {toast.open && <Toast response={toast.response} text={toast.message} close={closeToast} />}
     </>
