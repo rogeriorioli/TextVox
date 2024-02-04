@@ -1,39 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import {useNavigate, useParams } from 'react-router-dom';
-import { api } from '../../api/api';
-import { Document } from '../../types';
-import {ArrowUturnLeftIcon} from '@heroicons/react/24/solid'
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { api } from "../../api/api";
+import { Document } from "../../types";
+import {
+  ArrowUturnLeftIcon,
+  DocumentArrowDownIcon,
+} from "@heroicons/react/24/solid";
+import { exportFile } from "../../helpers/exportText";
 
 export default function DocumentPage() {
-  const navigate= useNavigate()
-  const { id } = useParams()
-  const [doc, setDoc] = useState<Document>()
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [doc, setDoc] = useState<Document>();
 
   const getDocument = async () => {
     try {
-      const {data} = await api.get<Document>(`/transcription/${id}`)
-      setDoc(data)
-    }catch(err) {
-
-    }
-  }
+      const { data } = await api.get<Document>(`/transcription/${id}`);
+      setDoc(data);
+    } catch (err) {}
+  };
 
   useEffect(() => {
-    getDocument()
-  },[])
+    getDocument();
+  }, []);
   return (
-    <article className='lg:w-96 bg-white p-8 mx-auto'>
-      <div>
+    <article className="lg:w-96 bg-white p-8 mx-auto">
+      <div className="flex justify-between">
         <button onClick={() => navigate(-1)}>
-          <ArrowUturnLeftIcon className="h-6 w-6 text-gray-900"/>
+          <ArrowUturnLeftIcon className="h-6 w-6 text-gray-900" />
+        </button>
+        <button
+        title="dowload document"
+          onClick={() =>
+            exportFile(
+              `${new Date(`${doc?.created_at}`).toLocaleDateString("pt")} ${
+                doc?.title
+              } ${doc?.transcription} document generated from audio_id : ${doc?.audio_id}`,
+              `${doc?.title.trim()}`
+            )
+          }
+        >
+          <DocumentArrowDownIcon className="h-6 w-6 text-gray-900" />
         </button>
       </div>
-       <small className='text-gray-400'>{new Date(`${doc?.created_at}`).toLocaleDateString('pt')}</small> 
-      <h2 className=' font-medium  text-gray-900 mt-3'>{doc?.title}</h2>
-      <p className='text-xs text-gray-800 my-3'>{doc?.transcription}</p>
+      <small className="text-gray-400">
+        {new Date(`${doc?.created_at}`).toLocaleDateString("pt")}
+      </small>
+      <h2 className=" font-medium  text-gray-900 mt-3">{doc?.title}</h2>
+      <p className="text-xs text-gray-800 my-3">{doc?.transcription}</p>
       <footer>
-        <small className='text-gray-400'>document generated from audio id : {doc?.audio_id}</small>
+        <small className="text-gray-400">
+          document generated from audio id : {doc?.audio_id}
+        </small>
       </footer>
     </article>
-  )
+  );
 }
