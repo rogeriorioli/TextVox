@@ -17,3 +17,5 @@ route.get('/audio', audioController.getAudio)
 route.delete('/audio/:id', audioController.deleteAudio)
 route.post('/transcription/audio/:id', documentController.create )
 route.get('/transcription/:id', documentController.getDocument )
+
+route.get("/:file", audioController.playAudio)

@@ -42,7 +42,7 @@ export default function Home() {
           "Content-Type": "multipart/form-data",
         },
       });
-
+      const {data} = response
       setToast({
         open : true,
         message : 'upload successful',
@@ -105,6 +105,7 @@ export default function Home() {
                 id={item.id}
                 created_at={new Date(item.created_at).toLocaleDateString("pt")}
                 name={item.name}
+                s3Url={item.name}
                 bump={() => handleDelete(item.id)}
                 create={() => handleCreate(item.id)}
                 document={item.document}

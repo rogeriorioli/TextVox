@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { prisma } from "../config/prisma";
+import path from "path";
 
 export default class AudioController {
   public async UplaodAudio(req: Request, res: Response) {
     const { file } : any  = req;
+
+
     if (!file) {
       res.json("nenhum audio encontrado");
     }
@@ -52,4 +55,16 @@ export default class AudioController {
       res.json(err);
     }
   }
+
+  public async playAudio(req: Request, res: Response) {
+    const {file} = req.params
+    console.log(file)
+    const tmpFolder = path.join(__dirname, "../","../", "tmp/")
+    try {
+      res.sendFile(tmpFolder+file);
+    } catch (err) {
+      res.json(err);
+    }
+  }
+  
 }

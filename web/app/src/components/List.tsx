@@ -7,6 +7,7 @@ interface ListProps {
   id: string;
   name: string;
   created_at?: string;
+  s3Url? : string
   create: () => void;
   bump: () => void;
   document?: Document[];
@@ -17,6 +18,7 @@ export default function List({
   name,
   created_at,
   document,
+  s3Url,
   create,
   bump,
 }: ListProps) {
@@ -39,6 +41,11 @@ export default function List({
           </button>
         </div>
       </div>
+        <div className="flex w-full justify-center">
+          <audio controls >
+            <source src={`http://localhost:3333/${s3Url}`} type="audio/mp3"/>
+            </audio>
+        </div>
       <hr />
       {document?.length ? <h2>Document generated</h2> : 'No docs found'}
       {document && (
